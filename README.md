@@ -19,7 +19,10 @@ PAYDITA_BASE_URL=https://pay.kandita.id
 PAYDITA_KEY=pk_sand_...
 PAYDITA_SECRET=ps_sand_...
 PAYDITA_SIGNING_SECRET=whsec_sand_...
+PAYDITA_CALLBACK_URL=https://aplikasi-anda.com/paydita/events
 ```
+
+`PAYDITA_CALLBACK_URL` **wajib**: URL publik lengkap rute event di bawah (`APP_URL` + `PAYDITA_WEBHOOK_PATH`) dan harus sama dengan callback URL yang didaftarkan di Paydita. Tanpa nilai ini, setiap panggilan ke Paydita (termasuk `paydita:ping`) melempar `PayditaException`.
 
 Tes koneksi: `php artisan paydita:ping`
 

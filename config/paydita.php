@@ -18,6 +18,19 @@ return [
     'secret' => env('PAYDITA_SECRET'),
     'signing_secret' => env('PAYDITA_SIGNING_SECRET'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Callback URL
+    |--------------------------------------------------------------------------
+    |
+    | Required. The full public URL of this application's webhook route
+    | (APP_URL + the webhook path below), e.g. https://example.com/paydita/events.
+    | It must match the callback URL registered for this application in Paydita.
+    |
+    */
+
+    'callback_url' => env('PAYDITA_CALLBACK_URL'),
+
     'timeout' => (int) env('PAYDITA_TIMEOUT', 15),
 
     /*

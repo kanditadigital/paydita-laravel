@@ -177,3 +177,13 @@ it('can be faked in the tests of an application', function () use ($items) {
 
     $fake->assertOrderCreated(fn (array $call) => $call['externalOrderId'] === 'INV-9');
 });
+
+it('refuses to call Paydita without a callback url', function () {
+    Http::fake();
+    config()->set('paydita.callback_url', null);
+
+    expect(fn () => Paydita::getOrder('01a14c3a-7a30-7000-8000-000000000001'))
+        ->toThrow(PayditaException::class, 'paydita.callback_url (PAYDITA_CALLBACK_URL)');
+
+    Http::assertNothingSent();
+});

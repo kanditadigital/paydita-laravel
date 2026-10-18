@@ -97,6 +97,8 @@ class PayditaClient
      */
     private function send(string $method, string $path, ?array $body = null, ?string $idempotencyKey = null): array
     {
+        $this->required('callback_url');
+
         $json = $body === null ? '' : json_encode($body, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
         $path = self::ApiPrefix.$path;
 

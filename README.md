@@ -9,7 +9,7 @@ Paket ini menandatangani request, membuat order, dan memverifikasi event dari Pa
 Paket ini privat. Tambahkan repositorinya di `composer.json` aplikasi Anda, lalu:
 
 ```
-composer require kandita/paydita-laravel
+composer require kandita/paydita
 ```
 
 Isi `.env` (hanya di backend; nilai berasal dari Super Admin Paydita, per environment):

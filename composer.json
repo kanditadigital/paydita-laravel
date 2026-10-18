@@ -1,5 +1,5 @@
 {
-    "name": "kandita/paydita-laravel",
+    "name": "kandita/paydita",
     "description": "Laravel client for Paydita, the internal central payment API of PT. Kandita Digital Integrasi.",
     "type": "library",
     "license": "proprietary",

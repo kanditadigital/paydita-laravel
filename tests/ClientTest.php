@@ -187,3 +187,29 @@ it('refuses to call Paydita without a callback url', function () {
 
     Http::assertNothingSent();
 });
+
+it('rejects a callback url that is not https', function () {
+    Http::fake();
+    config()->set('paydita.callback_url', 'http://app.example.test/paydita/events');
+
+    expect(fn () => Paydita::getOrder('01a14c3a-7a30-7000-8000-000000000001'))
+        ->toThrow(PayditaException::class, 'must be a public https URL');
+
+    Http::assertNothingSent();
+});
+
+it('reads the order and checkout fields Paydita returns', function () {
+    Http::fake(['*' => Http::response(orderResponse([
+        'description' => 'Langganan',
+        'customer' => ['name' => 'Budi', 'email' => 'b@example.com'],
+        'return_url' => 'https://app.example.test/done',
+        'created_at' => '2026-10-18T14:00:00+07:00',
+    ]), 200)]);
+
+    $order = Paydita::getOrder('01a14c3a-7a30-7000-8000-000000000001');
+
+    expect($order->description)->toBe('Langganan')
+        ->and($order->customer['email'])->toBe('b@example.com')
+        ->and($order->returnUrl)->toBe('https://app.example.test/done')
+        ->and($order->createdAt)->toBe('2026-10-18T14:00:00+07:00');
+});

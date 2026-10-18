@@ -9,6 +9,7 @@ final readonly class Order
 {
     /**
      * @param  list<array{id: string, name: string, price: int, quantity: int}>  $items
+     * @param  array{name: string, email: string}|null  $customer
      * @param  array<string, mixed>  $raw
      */
     public function __construct(
@@ -19,6 +20,10 @@ final readonly class Order
         public int $grossAmount,
         public array $items,
         public ?Checkout $checkout,
+        public ?string $description = null,
+        public ?array $customer = null,
+        public ?string $returnUrl = null,
+        public ?string $createdAt = null,
         public array $raw = [],
     ) {}
 
@@ -35,6 +40,10 @@ final readonly class Order
             grossAmount: (int) $data['gross_amount'],
             items: array_values($data['items'] ?? []),
             checkout: is_array($data['checkout'] ?? null) ? Checkout::fromArray($data['checkout']) : null,
+            description: $data['description'] ?? null,
+            customer: is_array($data['customer'] ?? null) ? $data['customer'] : null,
+            returnUrl: $data['return_url'] ?? null,
+            createdAt: $data['created_at'] ?? null,
             raw: $data,
         );
     }

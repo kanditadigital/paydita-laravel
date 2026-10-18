@@ -21,6 +21,8 @@ final readonly class Checkout
         public ?string $expiresAt,
         public ?string $paymentType,
         public ?string $paidAt,
+        public ?string $failureCode = null,
+        public ?string $orderUuid = null,
         public array $raw = [],
     ) {}
 
@@ -37,6 +39,8 @@ final readonly class Checkout
             expiresAt: $data['expires_at'] ?? null,
             paymentType: $data['payment_type'] ?? null,
             paidAt: $data['paid_at'] ?? null,
+            failureCode: $data['failure_code'] ?? null,
+            orderUuid: $data['order_uuid'] ?? null,
             raw: $data,
         );
     }

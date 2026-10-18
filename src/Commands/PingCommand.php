@@ -22,6 +22,7 @@ class PingCommand extends Command
             return self::FAILURE;
         }
 
+        $this->components->twoColumnDetail('Callback URL', (string) config('paydita.callback_url'));
         $this->components->info("Connected as {$result['application_code']} in {$result['environment']}.");
 
         return self::SUCCESS;

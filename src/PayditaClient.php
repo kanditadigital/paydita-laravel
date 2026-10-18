@@ -97,7 +97,7 @@ class PayditaClient
      */
     private function send(string $method, string $path, ?array $body = null, ?string $idempotencyKey = null): array
     {
-        $this->required('callback_url');
+        $this->assertCallbackUrl();
 
         $json = $body === null ? '' : json_encode($body, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
         $path = self::ApiPrefix.$path;
@@ -150,6 +150,19 @@ class PayditaClient
         }
 
         return $data;
+    }
+
+    /**
+     * Paydita only delivers events to an HTTPS callback; plain http is tolerated for local development only.
+     */
+    private function assertCallbackUrl(): void
+    {
+        $url = $this->required('callback_url');
+        $scheme = strtolower((string) parse_url($url, PHP_URL_SCHEME));
+
+        if ($scheme !== 'https' && ! ($scheme === 'http' && app()->environment('local'))) {
+            throw new PayditaException('paydita.callback_url (PAYDITA_CALLBACK_URL) must be a public https URL: Paydita does not deliver events to anything else.');
+        }
     }
 
     private function required(string $setting): string
